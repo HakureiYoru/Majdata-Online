@@ -16,8 +16,6 @@ export default function PageLayout({
 }) {
   return (
     <>
-      {/* Background */}
-      <div className="bg"></div>
 
       {/* Unified Header */}
       <UnifiedHeader />

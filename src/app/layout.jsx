@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./globals.css";
 import React from "react";
 import LanguageInitializer from "./widgets/LanguageInit";
+import ParticleBackground from "./widgets/ParticleBackground";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
       <link rel="icon" type="image/x-icon" href="favicon.ico" />
       <Suspense>
         <body className={inter.className}>
+          <ParticleBackground />
           <LanguageInitializer></LanguageInitializer>
           {children}
         </body>
