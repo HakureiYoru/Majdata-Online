@@ -2,12 +2,7 @@
 const nextConfig = {
     output: 'export',
     swcMinify: true,
-    webpack: (config, { isServer }) => {
-        if (!isServer) {
-            config.resolve.alias['createjs'] = 'createjs/builds/1.0.0/createjs.js';
-        }
-        return config;
-    }
+
 }
 // Configuration object tells the next-pwa plugin 
 const withPWA = require("next-pwa")({
