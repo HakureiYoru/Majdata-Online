@@ -1,0 +1,389 @@
+/* Sort Selector Component Styles */
+.sort-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--glassmorphism-bg-primary);
+  backdrop-filter: blur(20px);
+  border: var(--glassmorphism-border);
+  border-radius: var(--glassmorphism-border-radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  flex-wrap: wrap;
+}
+
+.sort-selector:hover {
+  background: var(--glassmorphism-bg-secondary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sort-label {
+  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.sort-label:hover {
+  color: var(--text-color-primary);
+}
+
+.modern-select {
+  position: relative;
+  flex: 1;
+  min-width: 150px;
+  max-width: 250px;
+}
+
+.modern-select select {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  background: var(--glassmorphism-bg-secondary);
+  border: var(--glassmorphism-border);
+  border-radius: 8px;
+  color: var(--text-color-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.modern-select select:focus {
+  outline: none;
+  border-color: var(--text-color-highlight);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.modern-select select:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modern-select select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modern-select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text-color-secondary);
+  pointer-events: none;
+  transition: border-top-color 0.3s ease;
+}
+
+.modern-select:hover::after {
+  border-top-color: var(--text-color-primary);
+}
+
+.modern-select select:focus::after {
+  border-top-color: var(--text-color-highlight);
+}
+
+.modern-select select option {
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--text-color-primary);
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: none;
+}
+
+.modern-select select option:hover {
+  background: var(--text-color-highlight);
+  color: white;
+}
+
+/* Sort Options */
+.sort-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sort-option {
+  padding: 0.5rem 1rem;
+  background: var(--glassmorphism-bg-secondary);
+  border: var(--glassmorphism-border);
+  border-radius: 6px;
+  color: var(--text-color-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.sort-option:hover:not(.active) {
+  background: var(--glassmorphism-bg-primary);
+  color: var(--text-color-primary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sort-option.active {
+  background: var(--text-color-highlight);
+  color: white;
+  border-color: var(--text-color-highlight);
+}
+
+/* Filter Group */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 150px;
+}
+
+.filter-label {
+  color: var(--text-color-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.filter-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.filter-checkbox:hover {
+  background: var(--glassmorphism-bg-secondary);
+}
+
+.filter-checkbox-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--text-color-highlight);
+  margin: 0;
+}
+
+.filter-checkbox-label {
+  color: var(--text-color-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.filter-checkbox:hover .filter-checkbox-label {
+  color: var(--text-color-primary);
+}
+
+.filter-checkbox-input:checked + .filter-checkbox-label {
+  color: var(--text-color-highlight);
+  font-weight: 500;
+}
+
+/* Radio Filters */
+.filter-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+
+.filter-radio:hover {
+  background: var(--glassmorphism-bg-secondary);
+}
+
+.filter-radio-input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--text-color-highlight);
+  margin: 0;
+}
+
+.filter-radio-label {
+  color: var(--text-color-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.filter-radio:hover .filter-radio-label {
+  color: var(--text-color-primary);
+}
+
+.filter-radio-input:checked + .filter-radio-label {
+  color: var(--text-color-highlight);
+  font-weight: 500;
+}
+
+/* Range Slider */
+.range-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.range-label {
+  color: var(--text-color-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.range-value {
+  color: var(--text-color-highlight);
+  font-weight: 600;
+}
+
+.range-input {
+  width: 100%;
+  height: 6px;
+  background: var(--glassmorphism-bg-secondary);
+  border: var(--glassmorphism-border);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--text-color-highlight);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+  background: #60a5fa;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.range-input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--text-color-highlight);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.range-input::-moz-range-thumb:hover {
+  background: #60a5fa;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Filter Actions */
+.filter-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  background: var(--glassmorphism-bg-secondary);
+  border: var(--glassmorphism-border);
+  border-radius: 6px;
+  color: var(--text-color-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-button:hover:not(:disabled) {
+  background: var(--text-color-highlight);
+  color: white;
+  border-color: var(--text-color-highlight);
+  transform: translateY(-1px);
+}
+
+.filter-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.filter-button.primary {
+  background: var(--text-color-highlight);
+  color: white;
+  border-color: var(--text-color-highlight);
+}
+
+.filter-button.primary:hover:not(:disabled) {
+  background: #60a5fa;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive Sort Selector */
+@media (width <= 768px) {
+  .sort-selector {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.25rem;
+  }
+  
+  .sort-label {
+    font-size: 0.85rem;
+  }
+  
+  .modern-select {
+    max-width: none;
+  }
+  
+  .filter-group {
+    min-width: auto;
+  }
+  
+  .filter-actions {
+    justify-content: center;
+  }
+}
+
+@media (width <= 480px) {
+  .sort-selector {
+    padding: 1rem;
+  }
+  
+  .sort-options {
+    justify-content: center;
+  }
+  
+  .filter-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
