@@ -1,0 +1,88 @@
+.map-timeline-container {
+  max-width: var(--container-max-width);
+  margin: var(--container-margin);
+  margin-bottom: 3rem;
+  padding: var(--container-padding);
+}
+
+.timeline-container {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgb(20 20 25 / 90%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 30%), 0 2px 8px rgb(0 0 0 / 20%);
+  border-radius: 12px;
+}
+
+.timeline-container h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.timeline-container input[type="range"] {
+  width: 100%;
+  height: 6px;
+  background: rgb(255 255 255 / 20%);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.timeline-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.timeline-container input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.date-display {
+  margin-top: 1rem;
+  color: rgb(255 255 255 / 90%);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 响应式设计 */
+@media (width <=768px) {
+  .map-timeline-container {
+    padding: 0 1rem;
+  }
+
+  .timeline-container {
+    padding: 0.75rem;
+  }
+
+  .timeline-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .date-display {
+    font-size: 1rem;
+  }
+}
+
+@media (width <=480px) {
+  .map-timeline-container {
+    margin: 1rem;
+    padding: 0;
+  }
+
+  .timeline-container {
+    padding: 0.5rem;
+  }
+}

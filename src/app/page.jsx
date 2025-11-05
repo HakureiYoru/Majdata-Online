@@ -19,10 +19,16 @@ import {
   getActiveEvents,
   getTimeAgo,
 } from "./utils/eventsData";
+import EventMap from './components/EventMap';
+import Timeline from './components/Timeline';
+import './styles/components/map-timeline.css';
 
 export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [ready, setReady] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   useEffect(() => {
     if (!isLoaded) {
       setIsLoaded(true);
@@ -37,6 +43,18 @@ export default function Page() {
     );
   }, []);
 
+  // 处理日期选择
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+
+  // 处理事件选择
+  const handleEventSelect = (event) => {
+    setSelectedEvent(event);
+    // 根据事件创建日期更新时间轴
+    setSelectedDate(new Date(event.createDate));
+  };
+
   if (!ready) return <div className="loading"></div>;
 
   return (
@@ -49,6 +67,11 @@ export default function Page() {
 
       {/* Main Content */}
       <MainComp />
+
+      <div className="map-timeline-container">
+        <EventMap selectedDate={selectedDate} onEventSelect={handleEventSelect} />
+        <Timeline selectedDate={selectedDate} onDateSelect={handleDateSelect} />
+      </div>
     </PageLayout>
   );
 }

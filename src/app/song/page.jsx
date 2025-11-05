@@ -20,6 +20,8 @@ import SongDifficultyLevels from "./SongDifficultyLevels";
 import { FaComments } from 'react-icons/fa';
 import { AiFillDelete } from 'react-icons/ai';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function Page() {
   const [source, target] = useSingleton();
@@ -526,14 +528,234 @@ function CommentComposer({
 }) {
   return (
     <div className={`comment-composer ${isReply ? "comment-composer-reply" : ""}`}>
-      <textarea
-        className="userinput commentbox modern-textarea"
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        value={value}
-        autoFocus={autoFocus}
-        disabled={isSubmitting}
-      />
+      {/* Input and Preview */}
+      <div className="comment-input-preview-container">
+        <div className="comment-input-section">
+          <textarea
+            className="userinput commentbox modern-textarea"
+            placeholder={placeholder}
+            onChange={(e) => onChange(e.target.value)}
+            value={value}
+            autoFocus={autoFocus}
+            disabled={isSubmitting}
+          />
+        </div>
+        <div className="comment-preview-section">
+          <div className="preview-header">
+            <span>{loc("Preview")}</span>
+          </div>
+          <div className="comment-preview modern-textarea">
+            <ReactMarkdown
+  remarkPlugins={[remarkGfm]}
+  components={{
+    img(props) {
+      const { ...rest } = props;
+      return (
+        <img
+          {...rest}
+          style={{
+            maxWidth: '100%',
+            height: 'auto',
+            display: 'block',
+            margin: '10px 0'
+          }}
+        />
+      );
+    },
+    a(props) {
+      const { ...rest } = props;
+      return (
+        <a
+          {...rest}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: '#3b82f6',
+            textDecoration: 'underline'
+          }}
+        />
+      );
+    },
+    code(props) {
+      const { inline, ...rest } = props;
+      if (inline) {
+        return (
+          <code
+            {...rest}
+            style={{
+              backgroundColor: '#1f2937',
+              color: '#f97316',
+              padding: '2px 6px',
+              borderRadius: '4px',
+              fontFamily: 'monospace'
+            }}
+          />
+        );
+      }
+      return (
+        <pre
+          style={{
+            backgroundColor: '#1f2937',
+            padding: '12px',
+            borderRadius: '8px',
+            overflowX: 'auto',
+            margin: '10px 0'
+          }}
+        >
+          <code
+            {...rest}
+            style={{
+              color: '#f97316',
+              fontFamily: 'monospace'
+            }}
+          />
+        </pre>
+      );
+    },
+    table(props) {
+      const { ...rest } = props;
+      return (
+        <table
+          {...rest}
+          style={{
+            borderCollapse: 'collapse',
+            width: '100%',
+            margin: '10px 0'
+          }}
+        />
+      );
+    },
+    th(props) {
+      const { ...rest } = props;
+      return (
+        <th
+          {...rest}
+          style={{
+            border: '1px solid #374151',
+            padding: '8px',
+            backgroundColor: '#1f2937',
+            textAlign: 'left'
+          }}
+        />
+      );
+    },
+    td(props) {
+      const { ...rest } = props;
+      return (
+        <td
+          {...rest}
+          style={{
+            border: '1px solid #374151',
+            padding: '8px'
+          }}
+        />
+      );
+    },
+    ul(props) {
+      const { ...rest } = props;
+      return (
+        <ul
+          {...rest}
+          style={{
+            paddingLeft: '24px',
+            margin: '10px 0'
+          }}
+        />
+      );
+    },
+    ol(props) {
+      const { ...rest } = props;
+      return (
+        <ol
+          {...rest}
+          style={{
+            paddingLeft: '24px',
+            margin: '10px 0'
+          }}
+        />
+      );
+    },
+    li(props) {
+      const { ...rest } = props;
+      return (
+        <li
+          {...rest}
+          style={{
+            margin: '4px 0'
+          }}
+        />
+      );
+    },
+    h1(props) {
+      const { ...rest } = props;
+      return (
+        <h1
+          {...rest}
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+            margin: '16px 0'
+          }}
+        />
+      );
+    },
+    h2(props) {
+      const { ...rest } = props;
+      return (
+        <h2
+          {...rest}
+          style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            margin: '14px 0'
+          }}
+        />
+      );
+    },
+    h3(props) {
+      const { ...rest } = props;
+      return (
+        <h3
+          {...rest}
+          style={{
+            fontSize: '18px',
+            fontWeight: 'bold',
+            margin: '12px 0'
+          }}
+        />
+      );
+    },
+    p(props) {
+      const { ...rest } = props;
+      return (
+        <p
+          {...rest}
+          style={{
+            margin: '8px 0'
+          }}
+        />
+      );
+    },
+    blockquote(props) {
+      const { ...rest } = props;
+      return (
+        <blockquote
+          {...rest}
+          style={{
+            borderLeft: '4px solid #374151',
+            paddingLeft: '12px',
+            margin: '10px 0',
+            color: '#9ca3af'
+          }}
+        />
+      );
+    }
+  }}
+>{value}</ReactMarkdown>
+          </div>
+        </div>
+      </div>
+
       <div className="comment-actions">
         <button
           className="linkContentWithBorder modern-interaction-btn comment-action-btn"
@@ -565,7 +787,7 @@ function CommentComposer({
               cursor: isSubmitting ? "not-allowed" : "pointer",
             }}
           >
-            {loc("CancelReply")}
+            {loc("Cancel")}
           </button>
         )}
       </div>
@@ -641,7 +863,7 @@ function CommentSender({ songid }) {
   );
 }
 
-// 解析评论内容，将 @用户名 转换为超链接
+// 解析评论内容，将 @用户名 转换为超链接并渲染Markdown
 function parseCommentContent(content) {
   // 优先匹配 "回复 @用户名：" 或 "Reply to @username:" 或 "返信先 @username:" 格式
   // 使用更灵活的正则，匹配任何文字 + @用户名 + 冒号的组合
@@ -687,47 +909,251 @@ function parseCommentContent(content) {
   const remainingContent = content.substring(startIndex);
   let lastIndex = 0;
   let match;
+  let markdownContent = '';
 
   while ((match = mentionRegex.exec(remainingContent)) !== null) {
-    // 添加 @mention 之前的文本
-    if (match.index > lastIndex) {
-      parts.push(
-        <span key={`text-${startIndex + lastIndex}`}>
-          {remainingContent.substring(lastIndex, match.index)}
-        </span>
-      );
-    }
-
-    // 添加 @mention 链接
+    // 添加 @mention 之前的文本到Markdown内容
+    markdownContent += remainingContent.substring(lastIndex, match.index);
+    
+    // 添加 @mention 链接（使用Markdown格式）
     const username = match[1];
-    parts.push(
-      <a
-        key={`mention-${startIndex + match.index}`}
-        href={`/space?id=${username}`}
-        className="comment-mention"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        @{username}
-      </a>
-    );
+    markdownContent += `[@${username}](/space?id=${username})`;
 
     lastIndex = match.index + match[0].length;
   }
 
-  // 添加剩余的文本
+  // 添加剩余的文本到Markdown内容
   if (lastIndex < remainingContent.length) {
-    parts.push(
-      <span key={`text-${startIndex + lastIndex}`}>
-        {remainingContent.substring(lastIndex)}
-      </span>
-    );
+    markdownContent += remainingContent.substring(lastIndex);
   }
 
-  return parts.length > 0 ? parts : content;
+  // 使用ReactMarkdown渲染Markdown内容
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        img(props) {
+          const { ...rest } = props;
+          return (
+            <img
+              {...rest}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                display: 'block',
+                margin: '10px 0'
+              }}
+            />
+          );
+        },
+        a(props) {
+          const { href, ...rest } = props;
+          // 处理@mention链接，确保它们在当前页面打开
+          if (href && href.startsWith('/space?id=')) {
+            return (
+              <a
+                {...rest}
+                href={href}
+                className="comment-mention"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              />
+            );
+          }
+          // 处理外部链接
+          return (
+            <a
+              {...rest}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#3b82f6',
+                textDecoration: 'underline'
+              }}
+            />
+          );
+        },
+        code(props) {
+          const { inline, ...rest } = props;
+          if (inline) {
+            return (
+              <code
+                {...rest}
+                style={{
+                  backgroundColor: '#1f2937',
+                  color: '#f97316',
+                  padding: '2px 6px',
+                  borderRadius: '4px',
+                  fontFamily: 'monospace'
+                }}
+              />
+            );
+          }
+          return (
+            <pre
+              style={{
+                backgroundColor: '#1f2937',
+                padding: '12px',
+                borderRadius: '8px',
+                overflowX: 'auto',
+                margin: '10px 0'
+              }}
+            >
+              <code
+                {...rest}
+                style={{
+                  color: '#f97316',
+                  fontFamily: 'monospace'
+                }}
+              />
+            </pre>
+          );
+        },
+        table(props) {
+          const { ...rest } = props;
+          return (
+            <table
+              {...rest}
+              style={{
+                borderCollapse: 'collapse',
+                width: '100%',
+                margin: '10px 0'
+              }}
+            />
+          );
+        },
+        th(props) {
+          const { ...rest } = props;
+          return (
+            <th
+              {...rest}
+              style={{
+                border: '1px solid #374151',
+                padding: '8px',
+                backgroundColor: '#1f2937',
+                textAlign: 'left'
+              }}
+            />
+          );
+        },
+        td(props) {
+          const { ...rest } = props;
+          return (
+            <td
+              {...rest}
+              style={{
+                border: '1px solid #374151',
+                padding: '8px'
+              }}
+            />
+          );
+        },
+        ul(props) {
+          const { ...rest } = props;
+          return (
+            <ul
+              {...rest}
+              style={{
+                paddingLeft: '24px',
+                margin: '10px 0'
+              }}
+            />
+          );
+        },
+        ol(props) {
+          const { ...rest } = props;
+          return (
+            <ol
+              {...rest}
+              style={{
+                paddingLeft: '24px',
+                margin: '10px 0'
+              }}
+            />
+          );
+        },
+        li(props) {
+          const { ...rest } = props;
+          return (
+            <li
+              {...rest}
+              style={{
+                margin: '4px 0'
+              }}
+            />
+          );
+        },
+        h1(props) {
+          const { ...rest } = props;
+          return (
+            <h1
+              {...rest}
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                margin: '16px 0'
+              }}
+            />
+          );
+        },
+        h2(props) {
+          const { ...rest } = props;
+          return (
+            <h2
+              {...rest}
+              style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                margin: '14px 0'
+              }}
+            />
+          );
+        },
+        h3(props) {
+          const { ...rest } = props;
+          return (
+            <h3
+              {...rest}
+              style={{
+                fontSize: '18px',
+                fontWeight: 'bold',
+                margin: '12px 0'
+              }}
+            />
+          );
+        },
+        p(props) {
+          const { ...rest } = props;
+          return (
+            <p
+              {...rest}
+              style={{
+                margin: '8px 0'
+              }}
+            />
+          );
+        },
+        blockquote(props) {
+          const { ...rest } = props;
+          return (
+            <blockquote
+              {...rest}
+              style={{
+                borderLeft: '4px solid #374151',
+                paddingLeft: '12px',
+                margin: '10px 0',
+                color: '#9ca3af'
+              }}
+            />
+          );
+        }
+      }}
+    >
+      {markdownContent}
+    </ReactMarkdown>
+  );
 }
 
 // CommentCard - 单条评论卡片（仅用于子回复）
@@ -1269,3 +1695,81 @@ function scoreCard(score, index) {
     </div>
   );
 }
+
+// CSS styles for comment input and preview layout
+<style jsx>{`
+  .comment-input-preview-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-direction: row;
+  }
+
+  .comment-input-section,
+  .comment-preview-section {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .comment-input-section textarea {
+    width: 100%;
+    height: 200px;
+    resize: vertical;
+    font-size: 14px;
+    padding: 12px;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    background-color: #111827;
+    color: #f3f4f6;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+  }
+
+  .comment-input-section textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .comment-preview-section {
+    background-color: #111827;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .preview-header {
+    padding: 8px 12px;
+    background-color: #1f2937;
+    border-bottom: 1px solid #374151;
+    border-radius: 8px 8px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f3f4f6;
+  }
+
+  .comment-preview {
+    padding: 12px;
+    overflow-y: auto;
+    height: 200px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #f3f4f6;
+    min-height: 200px;
+    max-height: 400px;
+  }
+
+  /* 响应式设计：在小屏幕上堆叠显示 */
+  @media (max-width: 768px) {
+    .comment-input-preview-container {
+      flex-direction: column;
+    }
+
+    .comment-input-section textarea,
+    .comment-preview {
+      height: 150px;
+    }
+  }
+`}</style>
+
